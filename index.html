@@ -10,9 +10,32 @@
     <header id="countries">
       <h1>Countries of the World</h1>
     </header>
+
     <main>
+      <div class="controls">
+        <input
+          class="search-input"
+          type="text"
+          placeholder="Search countries by name, city or language"
+          autofocus
+        />
+
+        <div class="buttons">
+          <button class="name">
+            Name &udarr;
+          </button>
+          <button class="capital">
+            Capital &udarr;
+          </button>
+          <button class="population">
+            Population &udarr;
+          </button>
+        </div>
+      </div>
+
       <div class="countries-wrapper"></div>
     </main>
+
     <script src="./js/main.js"></script>
   </body>
 </html>
