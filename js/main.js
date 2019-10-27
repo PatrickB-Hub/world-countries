@@ -1,4 +1,5 @@
 let countries;
+let totalPopulation = 0;
 
 /* filter options */
 const filter = {
@@ -10,13 +11,30 @@ const filter = {
 const countriesWrapper = document.querySelector(".countries-wrapper");
 const searchInput = document.querySelector(".search-input");
 const buttons = document.querySelector(".buttons");
+const graphWrapper = document.querySelector(".graph-wrapper");
+const graphTitle = document.querySelector(".graph-title");
+const graphButtons = document.querySelector(".graph-buttons");
+const totalCountries = document.querySelector(".total-countries");
+const matches = document.querySelector(".matches");
 
 /* fetch countries data */
 fetch("https://restcountries.eu/rest/v2/all")
   .then(res =>
     res.json().then(response => {
       countries = response;
-      renderCountries(countries);
+      totalPopulation = countries
+        .map(country => country.population)
+        .reduce((sum, current) => {
+          console.log(sum, current);
+          return sum + current;
+        });
+      console.log(totalPopulation);
+
+      totalCountries.textContent = `Currently, there are ${countries.length} countries`;
+      renderCountries(filterCountries(countries, searchInput.value));
+
+      graphTitle.textContent = "10 Most populated countries in the world";
+      renderPopulationGraph(mostPopulatedCountries());
     })
   )
   .catch(e => console.log(e));
@@ -134,6 +152,8 @@ buttons.addEventListener("click", e => {
         renderCountries(reversed);
       }
       break;
+    case "statistics":
+      break;
     default:
       sortedCountries = renderCountries(countries);
   }
@@ -142,5 +162,94 @@ buttons.addEventListener("click", e => {
 /* apply new search criteria and update countries when search input changes */
 searchInput.addEventListener("input", e => {
   let searchTerm = e.target.value;
+  let country =
+    filterCountries(countries, searchTerm).length > 1 ? "countries" : "country";
+  matches.innerHTML =
+    searchInput.value != ""
+      ? `<strong><b>${
+          filterCountries(countries, searchTerm).length
+        }</b></strong> ${country} satisified the search criteria`
+      : "";
   renderCountries(filterCountries(countries, searchTerm));
+  if (searchInput.value != "") {
+    graphTitle.textContent = "World Population";
+    renderPopulationGraph(filterCountries(countries, searchTerm));
+  } else {
+    graphTitle.textContent = "10 Most populated countries";
+    renderPopulationGraph(mostPopulatedCountries());
+  }
+});
+
+/* sort by ten most populated countries */
+const mostPopulatedCountries = () =>
+  sortByType(countries, "population").slice(0, 10);
+
+/* sort by ten most spoken languages */
+const mostSpokenLanguages = () =>
+  sortByType(countLanguages(countries), "countries").slice(0, 10);
+
+/* attach countries to their spoken languages */
+const countLanguages = arr => {
+  const langList = [];
+  const langObjs = [];
+  const langSet = new Set();
+  arr.forEach(country => {
+    let { languages } = country;
+    for (const language of languages) {
+      langList.push(language.name);
+      langSet.add(language.name);
+    }
+  });
+  for (const language of langSet) {
+    const countries = langList.filter(lang => lang === language).length;
+    langObjs.push({ language, countries });
+  }
+  return langObjs;
+};
+
+const createPopulationBar = ({ name, population }) => {
+  let formatedName;
+  /* use shorter names for usa and russia */
+  if (name === "Russian Federation") formatedName = "Russia";
+  else if (name === "United States of America") formatedName = "USA";
+  else formatedName = name;
+
+  const width = Math.ceil((population / totalPopulation) * 100);
+  return `<div class="bars" >
+              <div>${formatedName}</div>
+              <div class="bar" style="width:${width}%;height:35px;"></div>
+              <div>${population.toLocaleString()}</div>
+            </div>`;
+};
+
+const renderPopulationGraph = arr => {
+  let content = "";
+  arr.forEach(country => (content += createPopulationBar(country)));
+  graphWrapper.innerHTML = content;
+};
+
+const createLanguageBar = ({ language, countries }) => {
+  return `<div class="bars">
+              <div>${language}</div>
+              <div class="bar" style="width:${countries}%;height:35px;"></div>
+              <div>${countries}</div>
+            </div>`;
+};
+
+const renderLanguagesGraph = arr => {
+  let content = "";
+  arr.forEach(country => (content += createLanguageBar(country)));
+  graphWrapper.innerHTML = content;
+};
+
+graphButtons.addEventListener("click", e => {
+  const type = e.target.className;
+  if (type === "population") {
+    graphTitle.textContent =
+      "Ten countries with the highest population in the world";
+    renderPopulationGraph(mostPopulatedCountries());
+  } else {
+    graphTitle.textContent = "Ten most widely spoken languages in the world";
+    renderLanguagesGraph(mostSpokenLanguages());
+  }
 });

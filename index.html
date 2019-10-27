@@ -9,6 +9,8 @@
   <body>
     <header id="countries">
       <h1>Countries of the World</h1>
+      <p class="total-countries"></p>
+      <p class="matches"></p>
     </header>
 
     <main>
@@ -30,12 +32,23 @@
           <button class="population">
             Population &udarr;
           </button>
+          <a href="#stat"><button class="statistics">Graph</button></a>
         </div>
       </div>
 
       <div class="countries-wrapper"></div>
-    </main>
 
+      <div class="graph-container">
+        <div class="graph">
+          <h2 class="graph-title" id="stat"></h2>
+          <div class="graph-buttons">
+            <button class="population">Population</button>
+            <button class="languages">Languages</button>
+          </div>
+          <div class="graph-wrapper"></div>
+        </div>
+      </div>
+    </main>
     <script src="./js/main.js"></script>
   </body>
 </html>
