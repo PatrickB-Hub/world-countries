@@ -1,3 +1,12 @@
+/* === VARIABLES === */
+
+:root {
+  --primary-bg-color: #333;
+  --secondary-bg-color: #444;
+  --primary-color: #085293;
+  --primary-font-color: #fff;
+}
+
 /* === GENERAL === */
 
 * {
@@ -30,6 +39,20 @@ header h1 {
   color: var(--primary-font-color);
 }
 
+.total-countries {
+  color: #666;
+  font-weight: 650;
+  font-size: 1.6rem;
+}
+
+.matches {
+  margin: 0.5rem;
+  font-style: italic;
+  font-size: 1.6rem;
+  color: var(--primary-font-color);
+  font-weight: 500;
+}
+
 /* === MAIN === */
 
 .controls {
@@ -38,8 +61,7 @@ header h1 {
 }
 
 input {
-  color: #333;
-  background-color: #f4f4f4;
+  color: var(--primary-color);
   width: 50%;
   height: 5rem;
   margin: 1rem auto;
@@ -50,11 +72,16 @@ input {
   border-radius: 3rem;
 }
 
+input:hover,
+input:focus {
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+}
+
 input::placeholder {
   font-size: 2rem;
   font-weight: 100;
   opacity: 0.7;
-  color: #333;
+  color: var(--secondary-bg-color);
 }
 
 .buttons {
@@ -65,7 +92,12 @@ input::placeholder {
   position: relative;
 }
 
-.buttons button {
+.buttons a {
+  text-decoration: none;
+}
+
+.buttons button,
+.buttons a button {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -76,11 +108,24 @@ input::placeholder {
   border: none;
   cursor: pointer;
   margin: 1.5rem;
-  background: #333;
+  background: var(--primary-color);
   letter-spacing: 0.075rem;
-  color: #fff;
+  color: var(--primary-font-color);
   font-size: 1.8rem;
   border-radius: 3rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+}
+
+.buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+  background: #0d5a9c;
+}
+
+.buttons button:active {
+  transform: translateY(0px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
 }
 
 .countries-wrapper {
@@ -102,7 +147,14 @@ input::placeholder {
   margin: 1rem 1.5rem;
   padding: 3rem;
   border-radius: 0.5rem;
-  background: #ddd;
+  background: var(--secondary-bg-color);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.country:hover {
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+  -webkit-transition: all 0.2s;
+  transform: scale(1.01);
 }
 
 .country-flag {
@@ -111,9 +163,10 @@ input::placeholder {
   text-align: center;
   margin: 0 auto;
   margin-bottom: 5rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
 }
 
-.country-flag img {
+.country-card img {
   display: block;
   margin: 0 auto;
   width: 100%;
@@ -123,6 +176,7 @@ input::placeholder {
 .country-name {
   font-size: 1.7rem;
   text-align: center;
+  color: var(--primary-font-color);
   font-weight: 700;
   margin-bottom: 1rem;
 }
@@ -131,6 +185,7 @@ input::placeholder {
   font-size: 1.6rem;
   font-weight: 600;
   padding: 0.2rem;
+  color: var(--primary-font-color);
   text-align: left;
   letter-spacing: 0.05rem;
 }
@@ -145,13 +200,13 @@ input::placeholder {
 }
 
 .graph {
-  background: #fff;
+  background: var(--primary-bg-color);
   position: relative;
   padding: 2.5rem;
 }
 
 .graph-title {
-  color: #333;
+  color: var(--primary-font-color);
   font-weight: 700;
   font-size: 2.5rem;
   text-align: center;
@@ -167,7 +222,7 @@ input::placeholder {
 }
 
 .graph-buttons button {
-  background: #333;
+  background: var(--primary-color);
   display: inline-block;
   width: 12rem;
   outline: none;
@@ -176,11 +231,17 @@ input::placeholder {
   cursor: pointer;
   padding: 1rem;
   margin: auto 0.5rem;
-  color: #fff;
+  color: var(--primary-font-color);
   font-size: 1.35rem;
   font-weight: 500;
   letter-spacing: 0.075rem;
   transition: all 0.2s;
+}
+
+.graph-buttons button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+  background: #0d5a9c;
 }
 
 .graph-wrapper {
@@ -196,7 +257,7 @@ input::placeholder {
   grid-template-columns: 10% 65% 10%;
   justify-content: center;
   align-items: center;
-  color: #555;
+  color: var(--primary-font-color);
   letter-spacing: 0.075rem;
   margin: 1rem 0;
   gap: 1rem;
@@ -205,8 +266,34 @@ input::placeholder {
 }
 
 .bar {
-  background: #333;
+  background: var(--primary-color);
   border-radius: 0.2rem;
+}
+
+/* === SCROLL TO TOP BUTTON === */
+
+.scroll-top-button {
+  display: none;
+  position: fixed;
+  bottom: 3rem;
+  right: 4rem;
+  z-index: 3;
+  border: none;
+  outline: none;
+  background: var(--primary-color);
+  color: var(--primary-font-color);
+  cursor: pointer;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  font-size: 1.8rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+}
+
+.scroll-top-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+  background: #0d5a9c;
 }
 
 /* === MEDIA QUERIES BREAKPOINT ===*/
@@ -266,6 +353,7 @@ input::placeholder {
   }
 
   .graph {
+    background: var(--primary-bg-color);
     position: relative;
     padding: 1rem;
   }
@@ -282,6 +370,7 @@ input::placeholder {
     justify-content: center;
     align-items: center;
     gap: 0.5rem 0.5rem;
+    color: var(--primary-font-color);
     font-weight: 600;
     letter-spacing: 0.075rem;
     padding: 0.25rem 0;
@@ -289,6 +378,11 @@ input::placeholder {
   }
 
   .bar {
+    background: var(--primary-color);
     border-radius: 0.2rem;
+  }
+
+  .scroll-top-button {
+    opacity: 0.7;
   }
 }
