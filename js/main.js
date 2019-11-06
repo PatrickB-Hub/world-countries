@@ -16,6 +16,7 @@ const graphTitle = document.querySelector(".graph-title");
 const graphButtons = document.querySelector(".graph-buttons");
 const totalCountries = document.querySelector(".total-countries");
 const matches = document.querySelector(".matches");
+const scrollToTopButton = document.querySelector(".scroll-top-button");
 
 /* fetch countries data */
 fetch("https://restcountries.eu/rest/v2/all")
@@ -252,4 +253,19 @@ graphButtons.addEventListener("click", e => {
     graphTitle.textContent = "Ten most widely spoken languages in the world";
     renderLanguagesGraph(mostSpokenLanguages());
   }
+});
+
+window.onscroll = () => scrollHandler();
+
+/* show scrollToTopButton when user scrolls down 20px from top */
+function scrollHandler() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
+    scrollToTopButton.style.display = "block";
+  else scrollToTopButton.style.display = "none";
+}
+
+/* when the user clicks on the button, scroll to the top of the document */
+scrollToTopButton.addEventListener("click", e => {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 });
