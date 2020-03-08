@@ -143,7 +143,6 @@ input::placeholder {
   flex-direction: column;
   justify-content: space-around;
   width: 25rem;
-  height: 35rem;
   margin: 1rem 1.5rem;
   padding: 3rem;
   border-radius: 0.5rem;
@@ -162,7 +161,7 @@ input::placeholder {
   width: 16rem;
   text-align: center;
   margin: 0 auto;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
 }
 
@@ -276,7 +275,7 @@ input::placeholder {
   display: none;
   position: fixed;
   bottom: 3rem;
-  right: 4rem;
+  right: 2rem;
   z-index: 3;
   border: none;
   outline: none;
@@ -329,16 +328,9 @@ input::placeholder {
     border-radius: 0.5rem;
   }
 
-  .countries-wrapper {
-    width: 50%;
-  }
-
-  .country {
-    min-width: 100%;
-  }
-
-  .country-text {
-    text-align: center;
+  .country-card {
+    width: 80%;
+    align-items: center;
   }
 
   .graph-container {
@@ -380,9 +372,5 @@ input::placeholder {
   .bar {
     background: var(--primary-color);
     border-radius: 0.2rem;
-  }
-
-  .scroll-top-button {
-    opacity: 0.7;
   }
 }
